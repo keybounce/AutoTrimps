@@ -417,7 +417,47 @@ function calcDailyAttackMod(number) {
     return number;
 }
 
-MODULES.maps={},MODULES.maps.enoughDamageCutoff=4,MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.maxMapBonus=10,MODULES.maps.wantHealthMapBonus=10,MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.watchChallengeMaps=[15,25,35,50],MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2,MODULES.maps.maxMapBonusAfterZ=MODULES.maps.maxMapBonus;var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBaseDamage=calcOurDmg("avg", false, true),ourBaseDamage2=0,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
+// MODULES.maps={},MODULES.maps.enoughDamageCutoff=4,MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.maxMapBonus=10,MODULES.maps.wantHealthMapBonus=10,MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.watchChallengeMaps=[15,25,35,50],MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2,MODULES.maps.maxMapBonusAfterZ=MODULES.maps.maxMapBonus;var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBaseDamage=calcOurDmg("avg", false, true),ourBaseDamage2=0,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
+
+    MODULES.maps = {},
+    MODULES.maps.enoughDamageCutoff = 4,
+    MODULES.maps.farmingCutoff = getPageSetting("DisableFarm"),
+    MODULES.maps.numHitsSurvived = 8,
+    MODULES.maps.LeadfarmingCutoff = 10,
+    MODULES.maps.NomfarmingCutoff = 10,
+    MODULES.maps.NomFarmStacksCutoff = [ 7, 30, 100 ],
+    MODULES.maps.MapTierZone = [72, 47, 16],
+    MODULES.maps.MapTier0Sliders = [ 9, 9, 9, "Mountain" ],
+    MODULES.maps.MapTier1Sliders = [9, 9, 9, "Depths"],
+    MODULES.maps.MapTier2Sliders = [ 9, 9, 9, "Random" ],
+    MODULES.maps.MapTier3Sliders = [9, 9, 9, "Random"],
+    MODULES.maps.preferGardens = !getPageSetting("PreferMetal"),
+    MODULES.maps.maxMapBonus = 10,
+    MODULES.maps.wantHealthMapBonus = 10,
+    MODULES.maps.SpireFarm199Maps = !0,
+    MODULES.maps.watchChallengeMaps = [ 15, 25, 35, 50 ],
+    MODULES.maps.shouldFarmCell = 59,
+    MODULES.maps.SkipNumUnboughtPrestiges = 2,
+    MODULES.maps.UnearnedPrestigesRequired = 2,
+    MODULES.maps.maxMapBonusAfterZ = MODULES.maps.maxMapBonus;
+
+    var doVoids = !1,
+    needToVoid = !1,
+    needPrestige = !1,
+    skippedPrestige = !1,
+    HDratio = 0,
+    ourBaseDamage = calcOurDmg("avg", false, true),
+    ourBaseDamage2 = 0,
+    scryerStuck = !1,
+    shouldDoMaps = !1,
+    mapTimeEstimate = 0,
+    lastMapWeWereIn = null,
+    preSpireFarming = !1,
+    spireMapBonusFarming = !1,
+    spireTime = 0,
+    doMaxMapBonus = !1,
+    vanillaMapatZone = !1,
+    additionalCritMulti = 2 < getPlayerCritChance() ? 25 : 5;
 
 function autoMap() {
     var customVars = MODULES["maps"];
