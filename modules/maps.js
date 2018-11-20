@@ -76,14 +76,14 @@ function getBattleStats(what,form,crit) {
         currentCalc *= (1 + roboTrimpMod);
         roboTrimpMod *= 100;
     }
-	if (what == "health" && game.global.challengeActive == "Life"){
-		currentCalc *= game.challenges.Life.getHealthMult();
-	}
-	if (what == "attack" && game.global.challengeActive == "Life"){
-		currentCalc *= game.challenges.Life.getHealthMult();
-	}
+    if (what == "health" && game.global.challengeActive == "Life"){
+        currentCalc *= game.challenges.Life.getHealthMult();
+    }
+    if (what == "attack" && game.global.challengeActive == "Life"){
+        currentCalc *= game.challenges.Life.getHealthMult();
+    }
     if (what == "attack" && game.global.challengeActive == "Coordinate"){
-		currentCalc /= getBadCoordLevel();
+        currentCalc /= getBadCoordLevel();
     }
     if (what == "health" && game.global.challengeActive == "Balance"){
         currentCalc *= game.challenges.Balance.getHealthMult();
@@ -102,36 +102,36 @@ function getBattleStats(what,form,crit) {
     }
     if ((game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse") && what == "attack") {
         var mult = (1 - (game.challenges.Electricity.stacks * 0.1));
-		currentCalc *= mult;
+        currentCalc *= mult;
     }
     if (game.global.radioStacks > 0) {
         currentCalc *= (1 - (game.global.radioStacks * 0.1));
     }
     if (game.global.challengeActive == "Daily"){
         var mult = 0;
-		if (game.talents.daily.purchased && what == "attack"){
-			currentCalc *= 1.5;
-		}
-		if (typeof game.global.dailyChallenge.weakness !== 'undefined' && what == "attack"){
-			mult = dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
-			currentCalc *= mult;
-		}
-		if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && what == "attack" && (game.global.world % 2 == 1)){
-			mult = dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
-			currentCalc *= mult;
-		}
-		if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && what == "attack" && (game.global.world % 2 == 0)){
-			mult = dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
-			currentCalc *= mult;
-		}
-		if (typeof game.global.dailyChallenge.rampage !== 'undefined' && what == "attack"){
-			mult = dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
-			currentCalc *= mult;
-		}
-		if (typeof game.global.dailyChallenge.pressure !== 'undefined' && what == "health"){
-			mult = dailyModifiers.pressure.getMult(game.global.dailyChallenge.pressure.strength, game.global.dailyChallenge.pressure.stacks);
-			currentCalc *= mult;
-		}
+        if (game.talents.daily.purchased && what == "attack"){
+            currentCalc *= 1.5;
+        }
+        if (typeof game.global.dailyChallenge.weakness !== 'undefined' && what == "attack"){
+            mult = dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
+            currentCalc *= mult;
+        }
+        if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && what == "attack" && (game.global.world % 2 == 1)){
+            mult = dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
+            currentCalc *= mult;
+        }
+        if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && what == "attack" && (game.global.world % 2 == 0)){
+            mult = dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
+            currentCalc *= mult;
+        }
+        if (typeof game.global.dailyChallenge.rampage !== 'undefined' && what == "attack"){
+            mult = dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
+            currentCalc *= mult;
+        }
+        if (typeof game.global.dailyChallenge.pressure !== 'undefined' && what == "health"){
+            mult = dailyModifiers.pressure.getMult(game.global.dailyChallenge.pressure.strength, game.global.dailyChallenge.pressure.stacks);
+            currentCalc *= mult;
+        }
     }
     if (what != "block" && game.goldenUpgrades.Battle.currentBonus > 0){
         amt = game.goldenUpgrades.Battle.currentBonus;
@@ -141,57 +141,57 @@ function getBattleStats(what,form,crit) {
         amt = (game.talents.voidPower2.purchased) ? ((game.talents.voidPower3.purchased) ? 65 : 35) : 15;
         currentCalc *= (1 + (amt / 100));
     }
-	if (game.talents.stillRowing2.purchased && what == "attack" && game.global.spireRows >= 1){
-		amt = game.global.spireRows * 0.06;
-		currentCalc *= (amt + 1);
-	}
-	if (game.talents.healthStrength.purchased && what == "attack" && mutations.Healthy.active()){
-		var cellCount = mutations.Healthy.cellCount();
-		amt = (0.15 * cellCount);
-		currentCalc *= (amt + 1);
-	}
-	if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
-		currentCalc *= 2
-	}
-	if (game.global.sugarRush > 0 && what == "attack"){
-		currentCalc *= sugarRush.getAttackStrength();
-		textString += "<tr class='pumpkimpRow'><td class='bdTitle'>Sugar Rush</td><td>&nbsp;</td><td>&nbsp;</td><td>x " + sugarRush.getAttackStrength() + "</td><td class='bdNumberSm'>" + prettify(currentCalc) + "</td>" + ((what == "attack") ? getFluctuation(currentCalc, minFluct, maxFluct) : "") + "</tr>";
-	}
+    if (game.talents.stillRowing2.purchased && what == "attack" && game.global.spireRows >= 1){
+        amt = game.global.spireRows * 0.06;
+        currentCalc *= (amt + 1);
+    }
+    if (game.talents.healthStrength.purchased && what == "attack" && mutations.Healthy.active()){
+        var cellCount = mutations.Healthy.cellCount();
+        amt = (0.15 * cellCount);
+        currentCalc *= (amt + 1);
+    }
+    if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
+        currentCalc *= 2
+    }
+    if (game.global.sugarRush > 0 && what == "attack"){
+        currentCalc *= sugarRush.getAttackStrength();
+        textString += "<tr class='pumpkimpRow'><td class='bdTitle'>Sugar Rush</td><td>&nbsp;</td><td>&nbsp;</td><td>x " + sugarRush.getAttackStrength() + "</td><td class='bdNumberSm'>" + prettify(currentCalc) + "</td>" + ((what == "attack") ? getFluctuation(currentCalc, minFluct, maxFluct) : "") + "</tr>";
+    }
     if (mutations.Magma.active() && (what == "attack" || what == "health")){
         var mult = mutations.Magma.getTrimpDecay();
         var lvls = game.global.world - mutations.Magma.start() + 1;
         currentCalc *= mult;
     }
-	if (game.global.totalSquaredReward > 0 && (what == "attack" || what == "health")){
-		var amt = game.global.totalSquaredReward;
-		currentCalc *= (1 + (amt / 100));
-	}
-	if (what == "attack" && getEmpowerment() == "Ice"){
-		var amt = 1 - game.empowerments.Ice.getCombatModifier();
-		currentCalc *= (1 + amt);
-	}
-	if (what == "attack" && Fluffy.isActive()){
-		var amt = Fluffy.getDamageModifier();
-		currentCalc *= amt;
-	}
-	if (what == "attack" && game.jobs.Amalgamator.owned > 0){
-		var amt = game.jobs.Amalgamator.getDamageMult();
-		currentCalc *= amt;
-	}
-	if (what == "health" && game.jobs.Amalgamator.owned > 0){
-		var amt = game.jobs.Amalgamator.getHealthMult();
-		currentCalc *= amt;
-	}
-	if (what == "attack" && game.singleRunBonuses.sharpTrimps.owned) {
-		currentCalc *= 1.5;
-	}
-	if (game.jobs.Magmamancer.owned > 0) {
-		currentCalc *= game.jobs.Magmamancer.getBonusPercent();
-	}
-	if (what == "attack" && getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
-		var amt = game.empowerments.Poison.getModifier() * 2;
-		currentCalc *= (1 + amt);
-	}
+    if (game.global.totalSquaredReward > 0 && (what == "attack" || what == "health")){
+        var amt = game.global.totalSquaredReward;
+        currentCalc *= (1 + (amt / 100));
+    }
+    if (what == "attack" && getEmpowerment() == "Ice"){
+        var amt = 1 - game.empowerments.Ice.getCombatModifier();
+        currentCalc *= (1 + amt);
+    }
+    if (what == "attack" && Fluffy.isActive()){
+        var amt = Fluffy.getDamageModifier();
+        currentCalc *= amt;
+    }
+    if (what == "attack" && game.jobs.Amalgamator.owned > 0){
+        var amt = game.jobs.Amalgamator.getDamageMult();
+        currentCalc *= amt;
+    }
+    if (what == "health" && game.jobs.Amalgamator.owned > 0){
+        var amt = game.jobs.Amalgamator.getHealthMult();
+        currentCalc *= amt;
+    }
+    if (what == "attack" && game.singleRunBonuses.sharpTrimps.owned) {
+        currentCalc *= 1.5;
+    }
+    if (game.jobs.Magmamancer.owned > 0) {
+        currentCalc *= game.jobs.Magmamancer.getBonusPercent();
+    }
+    if (what == "attack" && getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
+        var amt = game.empowerments.Poison.getModifier() * 2;
+        currentCalc *= (1 + amt);
+    }
     if (crit) {
         var critChance = getPlayerCritChance();
         if (what == "attack" && critChance){
@@ -204,148 +204,148 @@ function getBattleStats(what,form,crit) {
 function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   var number = game.global.soldierCurrentAttack;
   var fluctuation = .2;
-	var maxFluct = -1;
-	var minFluct = -1;
-	if (game.jobs.Amalgamator.owned > 0){
-		number *= game.jobs.Amalgamator.getDamageMult();
-	}
-	if (game.challenges.Electricity.stacks > 0) { //Electricity
-		number *= (1 - (game.challenges.Electricity.stacks * 0.1));
-	}
-	if (game.global.antiStacks > 0) {
-		number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
-	}
-	if (!game.global.mapsActive && game.global.mapBonus > 0){
-		number *= ((game.global.mapBonus * .2) + 1);
-	}
-	if (game.global.achievementBonus > 0){
-		number *= (1 + (game.global.achievementBonus / 100));
-	}
-	if (game.global.challengeActive == "Discipline"){
-		fluctuation = .995;
-	}
-	else if (game.portal.Range.level > 0){
-		minFluct = fluctuation - (.02 * game.portal.Range.level);
-	}
-	if (game.global.challengeActive == "Decay"){
-		number *= 5;
-		number *= Math.pow(0.995, game.challenges.Decay.stacks);
-	}
-	if (game.global.roboTrimpLevel > 0){
-		number *= ((0.2 * game.global.roboTrimpLevel) + 1);
-	}
-	if (game.global.challengeActive == "Lead" && ((game.global.world % 2) == 1)){
-		number *= 1.5;
-	}
-	if (game.goldenUpgrades.Battle.currentBonus > 0){
-		number *= game.goldenUpgrades.Battle.currentBonus + 1;
-	}
-	if (game.talents.voidPower.purchased && game.global.voidBuff){
-		var vpAmt = (game.talents.voidPower2.purchased) ? ((game.talents.voidPower3.purchased) ? 65 : 35) : 15;
-		number *= ((vpAmt / 100) + 1);
-	}
-	if (game.global.totalSquaredReward > 0){
-		number *= ((game.global.totalSquaredReward / 100) + 1)
-	}
-	if (getEmpowerment() == "Ice"){
-		number *= 1 + (1 - game.empowerments.Ice.getCombatModifier());
-	}
-	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
-		number *= 1 + game.empowerments.Poison.getModifier();
-	}
-	if (game.talents.magmamancer.purchased){
-		number *= game.jobs.Magmamancer.getBonusPercent();
-	}
-	if (game.talents.stillRowing2.purchased){
-		number *= ((game.global.spireRows * 0.06) + 1);
-	}
-	if (game.talents.healthStrength.purchased && mutations.Healthy.active()){
-		number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
-	}
-	if (game.global.sugarRush > 0){
-		number *= sugarRush.getAttackStrength();
-	}
-	if (game.global.challengeActive == "Life") {
-		number *= game.challenges.Life.getHealthMult();
-	}
-    	if (game.global.challengeActive == "Coordinate"){
-		number /= getBadCoordLevel();
-    	}
-	if (game.singleRunBonuses.sharpTrimps.owned){
-		number *= 1.5;
-	}
-	if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
-		number *= 1.5;
-	}
-	if (game.global.challengeActive == "Daily"){
-		if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
-			if (minFluct == -1) minFluct = fluctuation;
-			minFluct += dailyModifiers.minDamage.getMult(game.global.dailyChallenge.minDamage.strength);
-		}
-		if (typeof game.global.dailyChallenge.maxDamage !== 'undefined'){
-			if (maxFluct == -1) maxFluct = fluctuation;
-			maxFluct += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
-		}
-		if (typeof game.global.dailyChallenge.weakness !== 'undefined'){
-			number *= dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
-		}
-		if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && ((game.global.world % 2) == 1)){
-				number *= dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
-		}
-		if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && ((game.global.world % 2) == 0)){
-				number *= dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
-		}
-		if (typeof game.global.dailyChallenge.rampage !== 'undefined'){
-			number *= dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
-		}
-	}
-	if (Fluffy.isActive()){
-		number *= Fluffy.getDamageModifier();
-	}
-
-  if (!incStance && game.global.formation != 0) {
-    number /= (game.global.formation == 2) ? 4 : 0.5;
-  }
-
-  var min = number;
-  var max = number;
-  var avg = number;
-
-  var critTier = 0;
-  var critChance = getPlayerCritChance();
-  if (critChance > 0){
-    critTier = Math.floor(critChance);
-    critChance = critChance % 1;
-    max *= getPlayerCritDamageMult();
-    if (critTier > 0){
-      min = max;
-      if (critTier > 1){
-        min *= getMegaCritDamageMult(critTier);
-      }
-      if (critChance > 0) max *= getMegaCritDamageMult(critTier + 1);
-      else max = min;
+    var maxFluct = -1;
+    var minFluct = -1;
+    if (game.jobs.Amalgamator.owned > 0){
+        number *= game.jobs.Amalgamator.getDamageMult();
     }
-    avg = max * critChance + min * (1 - critChance);
-  }
-  if (critChance < 0) {
-    min *= 0.2;
-    if (critChance <= -1) max *= 0.2;
-    avg = max * (1 + critChance) + min * -critChance;
-  }
+    if (game.challenges.Electricity.stacks > 0) { //Electricity
+        number *= (1 - (game.challenges.Electricity.stacks * 0.1));
+    }
+    if (game.global.antiStacks > 0) {
+        number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
+    }
+    if (!game.global.mapsActive && game.global.mapBonus > 0){
+        number *= ((game.global.mapBonus * .2) + 1);
+    }
+    if (game.global.achievementBonus > 0){
+        number *= (1 + (game.global.achievementBonus / 100));
+    }
+    if (game.global.challengeActive == "Discipline"){
+        fluctuation = .995;
+    }
+    else if (game.portal.Range.level > 0){
+        minFluct = fluctuation - (.02 * game.portal.Range.level);
+    }
+    if (game.global.challengeActive == "Decay"){
+        number *= 5;
+        number *= Math.pow(0.995, game.challenges.Decay.stacks);
+    }
+    if (game.global.roboTrimpLevel > 0){
+        number *= ((0.2 * game.global.roboTrimpLevel) + 1);
+    }
+    if (game.global.challengeActive == "Lead" && ((game.global.world % 2) == 1)){
+        number *= 1.5;
+    }
+    if (game.goldenUpgrades.Battle.currentBonus > 0){
+        number *= game.goldenUpgrades.Battle.currentBonus + 1;
+    }
+    if (game.talents.voidPower.purchased && game.global.voidBuff){
+        var vpAmt = (game.talents.voidPower2.purchased) ? ((game.talents.voidPower3.purchased) ? 65 : 35) : 15;
+        number *= ((vpAmt / 100) + 1);
+    }
+    if (game.global.totalSquaredReward > 0){
+        number *= ((game.global.totalSquaredReward / 100) + 1)
+    }
+    if (getEmpowerment() == "Ice"){
+        number *= 1 + (1 - game.empowerments.Ice.getCombatModifier());
+    }
+    if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
+        number *= 1 + game.empowerments.Poison.getModifier();
+    }
+    if (game.talents.magmamancer.purchased){
+        number *= game.jobs.Magmamancer.getBonusPercent();
+    }
+    if (game.talents.stillRowing2.purchased){
+        number *= ((game.global.spireRows * 0.06) + 1);
+    }
+    if (game.talents.healthStrength.purchased && mutations.Healthy.active()){
+        number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
+    }
+    if (game.global.sugarRush > 0){
+        number *= sugarRush.getAttackStrength();
+    }
+    if (game.global.challengeActive == "Life") {
+        number *= game.challenges.Life.getHealthMult();
+    }
+    if (game.global.challengeActive == "Coordinate"){
+        number /= getBadCoordLevel();
+    }
+    if (game.singleRunBonuses.sharpTrimps.owned){
+        number *= 1.5;
+    }
+    if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
+        number *= 1.5;
+    }
+    if (game.global.challengeActive == "Daily"){
+        if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
+            if (minFluct == -1) minFluct = fluctuation;
+            minFluct += dailyModifiers.minDamage.getMult(game.global.dailyChallenge.minDamage.strength);
+        }
+        if (typeof game.global.dailyChallenge.maxDamage !== 'undefined'){
+            if (maxFluct == -1) maxFluct = fluctuation;
+            maxFluct += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
+        }
+        if (typeof game.global.dailyChallenge.weakness !== 'undefined'){
+            number *= dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
+        }
+        if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && ((game.global.world % 2) == 1)){
+                number *= dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
+        }
+        if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && ((game.global.world % 2) == 0)){
+                number *= dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
+        }
+        if (typeof game.global.dailyChallenge.rampage !== 'undefined'){
+            number *= dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
+        }
+    }
+    if (Fluffy.isActive()){
+        number *= Fluffy.getDamageModifier();
+    }
 
-  if (incFlucts) {
-    if (minFluct > 1) minFluct = 1;
-    if (maxFluct == -1) maxFluct = fluctuation;
-    if (minFluct == -1) minFluct = fluctuation;
+    if (!incStance && game.global.formation != 0) {
+        number /= (game.global.formation == 2) ? 4 : 0.5;
+    }
 
-    min *= (1 - minFluct);
-    max *= (1 + maxFluct);
-    avg *= 1 + (maxFluct - minFluct)/2;
-  }
+    var min = number;
+    var max = number;
+    var avg = number;
 
-  if (minMaxAvg == "min") return min;
-  else if (minMaxAvg == "max") return max;
-  else if (minMaxAvg == "avg") return avg;
+    var critTier = 0;
+    var critChance = getPlayerCritChance();
+    if (critChance > 0){
+        critTier = Math.floor(critChance);
+        critChance = critChance % 1;
+        max *= getPlayerCritDamageMult();
+        if (critTier > 0){
+            min = max;
+            if (critTier > 1){
+                min *= getMegaCritDamageMult(critTier);
+            }
+            if (critChance > 0) max *= getMegaCritDamageMult(critTier + 1);
+            else max = min;
+        }
+        avg = max * critChance + min * (1 - critChance);
+    }
+    if (critChance < 0) {
+        min *= 0.2;
+        if (critChance <= -1) max *= 0.2;
+        avg = max * (1 + critChance) + min * -critChance;
+    }
+
+    if (incFlucts) {
+        if (minFluct > 1) minFluct = 1;
+        if (maxFluct == -1) maxFluct = fluctuation;
+        if (minFluct == -1) minFluct = fluctuation;
+
+        min *= (1 - minFluct);
+        max *= (1 + maxFluct);
+        avg *= 1 + (maxFluct - minFluct)/2;
+    }
+
+    if (minMaxAvg == "min") return min;
+    else if (minMaxAvg == "max") return max;
+    else if (minMaxAvg == "avg") return avg;
 
 }
 
@@ -380,8 +380,8 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
         }
         else if (game.global.challengeActive == "Corrupted"){
             number *= 3;
-	    }
-	    else if (game.global.challengeActive == "Obliterated"){
+        }
+        else if (game.global.challengeActive == "Obliterated"){
             number *= 1e12;
         }
         if (daily)
@@ -971,47 +971,47 @@ function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpir
 MODULES["maps"].advSpecialMapMod_numZones = 3;
 var advExtraMapLevels = 0;
 function testMapSpecialModController() {
-	var a = [];
-	if (Object.keys(mapSpecialModifierConfig).forEach(function (o) {
-			var p = mapSpecialModifierConfig[o];
-			game.global.highestLevelCleared + 1 >= p.unlocksAt && a.push(p.abv.toLowerCase());
-		}), !(1 > a.length)) {
-		var c = document.getElementById("advSpecialSelect");
-		if (c) {
-			if (59 <= game.global.highestLevelCleared) {
-				if (needPrestige && a.includes("p")) { // Prestiging, so use Prestigious
-					c.value = "p";
-				}
-				else if (shouldFarm) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
-					c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
-				}
-				else c.value = "fa"; // Just farming for map stacks, so use Fast Attacks
-				// Only use a modifier we can actually afford
-				for (var d = updateMapCost(!0), e = game.resources.fragments.owned, f = 100 * (d / e); 0 < c.selectedIndex && d > e; )
-				{
-					c.selectedIndex -= 1;
-					"0" != c.value && console.log("Could not afford " + mapSpecialModifierConfig[c.value].name);
-				}
-				var d = updateMapCost(!0),
-				e = game.resources.fragments.owned;
-				"0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.")
-			}
-			var g = getSpecialModifierSetting(),
-			h = 109 <= game.global.highestLevelCleared,
-			i = checkPerfectChecked(),
-			j = document.getElementById("advPerfectCheckbox"),
-			k = getPageSetting("AdvMapSpecialModifier") ? getExtraMapLevels() : 0,
-			l = 209 <= game.global.highestLevelCleared;
-			if (l) {
-				var m = document.getElementById("advExtraMapLevelselect");
-				if (!m)
-					return;
-				var n = document.getElementById("mapLevelInput").value;
-				for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned; )
-					m.selectedIndex -= 1
-			}
-		}
-	}
+    var a = [];
+    if (Object.keys(mapSpecialModifierConfig).forEach(function (o) {
+            var p = mapSpecialModifierConfig[o];
+            game.global.highestLevelCleared + 1 >= p.unlocksAt && a.push(p.abv.toLowerCase());
+        }), !(1 > a.length)) {
+        var c = document.getElementById("advSpecialSelect");
+        if (c) {
+            if (59 <= game.global.highestLevelCleared) {
+                if (needPrestige && a.includes("p")) { // Prestiging, so use Prestigious
+                    c.value = "p";
+                }
+                else if (shouldFarm) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
+                    c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
+                }
+                else c.value = "fa"; // Just farming for map stacks, so use Fast Attacks
+                // Only use a modifier we can actually afford
+                for (var d = updateMapCost(!0), e = game.resources.fragments.owned, f = 100 * (d / e); 0 < c.selectedIndex && d > e; )
+                {
+                    c.selectedIndex -= 1;
+                    "0" != c.value && console.log("Could not afford " + mapSpecialModifierConfig[c.value].name);
+                }
+                var d = updateMapCost(!0),
+                e = game.resources.fragments.owned;
+                "0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.")
+            }
+            var g = getSpecialModifierSetting(),
+            h = 109 <= game.global.highestLevelCleared,
+            i = checkPerfectChecked(),
+            j = document.getElementById("advPerfectCheckbox"),
+            k = getPageSetting("AdvMapSpecialModifier") ? getExtraMapLevels() : 0,
+            l = 209 <= game.global.highestLevelCleared;
+            if (l) {
+                var m = document.getElementById("advExtraMapLevelselect");
+                if (!m)
+                    return;
+                var n = document.getElementById("mapLevelInput").value;
+                for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned; )
+                    m.selectedIndex -= 1
+            }
+        }
+    }
 }
 function mapTimeEstimater(){var a=lookUpZoneData(game.global.world),b=lookUpZoneData(game.global.world-1);return mapTimeEstimate=a&&b?a.currentTime-b.currentTime:0,mapTimeEstimate}
 function HDratioy(){return HDratio}
