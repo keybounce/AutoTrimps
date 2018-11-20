@@ -1,6 +1,7 @@
-var ATversion='2.1.6.9b-genbtc-4-2-2018 + KFrowde + Zeker0',
+var ATversion='2.1.6.9b-genbtc-4-2-2018 + KFrowde + Zeker0 + Keybounce',
     atscript=document.getElementById('AutoTrimps-script'),
     basepath='https://Keybounce.github.io/AutoTrimps/',
+    basepath='https://cdn.jsdelivr.net/gh/keybounce/AutoTrimps@mapTest/',
     modulepath='modules/';
     null!==atscript&&(basepath=atscript.src.replace(/AutoTrimps2\.js$/,''));
 function ATscriptLoad(a,b){null==b&&debug('Wrong Syntax. Script could not be loaded. Try ATscriptLoad(modulepath, \'example.js\'); ');var c=document.createElement('script');null==a&&(a=''),c.src=basepath+a+b+'.js',c.id=b+'_MODULE',document.head.appendChild(c)}
@@ -19,6 +20,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
+changelogList.push({date: "2018-11-19", version: "test", description: "Testing map changes", isNew: true});
 changelogList.push({date: "2018-11-19", version: "003", description: "4.914 Now builds faster when only a single building type (lots of mansions, etc.)", isNew: true});
 changelogList.push({date: "2018-11-19", version: "002", description: "4.914 Keybounce's version now loads.", isNew: true});
 changelogList.push({date: "2018-11-19", version: "001", description: "4.914 Turkimp now triggers most workers instead of always metal", isNew: true});

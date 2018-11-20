@@ -8,6 +8,7 @@
 // @include      *trimps.github.io*
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @connect      *Keybounce.github.io/AutoTrimps*
+// @connect      *cdn.jsdelivr.net/gh/keybounce/AutoTrimps*
 // @connect      *trimps.github.io*
 // @connect      self
 // @grant        none
@@ -16,7 +17,8 @@
 var script = document.createElement('script');
 script.id = 'AutoTrimps-Keybounce';
 //This can be edited to point to your own Github Repository URL.
-script.src = 'https://Keybounce.github.io/AutoTrimps/AutoTrimps2.js';
+// script.src = 'https://Keybounce.github.io/AutoTrimps/AutoTrimps2.js';
+script.src = 'https://cdn.jsdelivr.net/gh/keybounce/AutoTrimps@mapTest/AutoTrimps2.js';
 //script.setAttribute('crossorigin',"use-credentials");
 script.setAttribute('crossorigin',"anonymous");
 document.head.appendChild(script);

@@ -1,4 +1,5 @@
 //moving battle calc
+// This is a test of fetching the new incredible version!
 
 function getBattleStats(what,form,crit) {
     var currentCalc = 0;
