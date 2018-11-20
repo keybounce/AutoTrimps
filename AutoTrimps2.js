@@ -19,6 +19,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
+changelogList.push({date: "2018-11-19", version: "003", description: "4.914 Now builds faster when only a single building type (lots of mansions, etc.)", isNew: true});
 changelogList.push({date: "2018-11-19", version: "002", description: "4.914 Keybounce's version now loads.", isNew: true});
 changelogList.push({date: "2018-11-19", version: "001", description: "4.914 Turkimp now triggers most workers instead of always metal", isNew: true});
 changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
