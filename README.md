@@ -1,8 +1,11 @@
-# AutoTrimps + Zek
+# AutoTrimps + Zek + Keybounce
 
 ## Discussion / Discord Channel
 <a href="https://discord.gg/Ztcnfjr"><img src="https://png.icons8.com/color/180/discord-new-logo.png" width=48></a>
 Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestions for new features : https://discord.gg/Ztcnfjr (Shhhh)
+
+## Keybounce's changes:
+001 - Turkimp triggers job with most workers
 
 ## Current Version (full changes below) - Ongoing Development!
 - Too many to list
@@ -43,7 +46,7 @@ took a break
 
 ***Your only Option***: Install TamperMonkey (Chrome) or GreaseMonkey (Firefox)
 
-**EASY INSTALL click here: https://github.com/Zorn192/AutoTrimps/raw/gh-pages/.user.js** (the Monkeys will detect this and prompt you to install it)
+**EASY INSTALL click here: https://github.com/Keybounce/AutoTrimps/raw/gh-pages/.user.js** (the Monkeys will detect this and prompt you to install it)
 
 Overly detailed Chrome/TamperMonkey Instructions:
 - Open the TamperMonkey dashboard and go to utilities – in the URL box paste https://github.com/Zorn192/AutoTrimps/raw/gh-pages/.user.js and click IMPORT
