@@ -1,6 +1,6 @@
 var ATversion='2.1.6.9b-genbtc-4-2-2018 + KFrowde + Zeker0 + Keybounce',
     atscript=document.getElementById('AutoTrimps-script'),
-    basepath='https://Keybounce.github.io/AutoTrimps/',
+    // basepath='https://Keybounce.github.io/AutoTrimps/',
     basepath='https://cdn.jsdelivr.net/gh/keybounce/AutoTrimps@mapTest/',
     modulepath='modules/';
     null!==atscript&&(basepath=atscript.src.replace(/AutoTrimps2\.js$/,''));

@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         AutoTrimps-Keybounce
-// @version      1.0-Keybounce
-// @namespace    https://Keybounce.github.io/AutoTrimps
-// @updateURL    https://Keybounce.github.io/AutoTrimps/.user.js
+// @name         AutoTrimps-Keybounce-testBranch
+// @version      1.1-Keybounce
+// @namespace    https://cdn.jsdelivr.net/gh/Keybounce/AutoTrimps@mapTest
+// @updateURL    https://cdn.jsdelivr.net/gh/Keybounce/AutoTrimps@mapTest/.user.js
 // @description  Automate all the trimps!
 // @author       zininzinin, spindrjr, Ishkaru, genBTC, Zeker0, keybounce
 // @include      *trimps.github.io*
