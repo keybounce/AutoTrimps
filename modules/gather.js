@@ -53,7 +53,8 @@ function manualLabor2() {
         // debug('Science needed ' + scienceNeeded);
         if ((getPlayerModifier() < getPerSecBeforeManual('Scientist') && hasTurkimp)||getPageSetting('ManualGather2') == 2){
             //if manual is less than science production, switch on turkimp
-            setGather('metal');
+            // setGather('metal');
+            setTurkimpGather();
         }
         else if (getPageSetting('ManualGather2') != 2){
             setGather('science');
@@ -102,14 +103,16 @@ function manualLabor2() {
          }
         if (game.global.playerGathering != lowestResource && !haveWorkers && !breedFire) {
             if (hasTurkimp)
-                setGather('metal');
+                // setGather('metal');
+                setTurkimpGather();
             else
                 setGather(lowestResource);
         } else if (getPageSetting('ManualGather2') != 2 && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
             if (game.resources.science.owned < getPsString('science', true) * MODULES["gather"].minScienceSeconds && game.global.turkimpTimer < 1 && haveWorkers)
                 setGather('science');
             else if (hasTurkimp)
-                setGather('metal');
+                // setGather('metal');
+                setTurkimpGather();
             else
                 setGather(lowestResource);
         }
@@ -119,6 +122,34 @@ function manualLabor2() {
         else
             setGather(lowestResource);
     }
+}
+
+function findMostWorkers() // Determine which resource has the most people working, and use it
+{
+    var manualResourceList = {
+        'food': 'Farmer',
+        'wood': 'Lumberjack',
+        'metal': 'Miner',
+    };
+    var most = 'food';
+    var amount=0
+    for (var resource in manualResourceList)
+    {
+        var job = manualResourceList[resource];
+        var thisWorker = game.jobs[job].owned;
+        if (thisWorker > amount)
+        {
+            amount = thisWorker;
+            most = resource;
+        }
+    }
+    return most;
+}
+
+function setTurkimpGather()
+{
+    var most=findMostWorkers();
+    setGather(most);
 }
 
 function autogather3() {
