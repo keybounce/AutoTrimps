@@ -981,7 +981,7 @@ function testMapSpecialModController() {
 				if (needPrestige && a.includes("p")) { // Prestiging, so use Prestigious
 					c.value = "p";
 				}
-				else if (shouldFarm) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
+				else if (shouldFarm || !enoughHealth) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
 					c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
 				}
 				else c.value = "fa"; // Just farming for map stacks, so use Fast Attacks

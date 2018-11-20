@@ -80,7 +80,7 @@ function initializeAllSettings() {
 //CORE:
 
     //Line 1:
-    createSetting('ManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Mining/Building Only', 'Science Research OFF'], 'Controls what you gather/build do. Manual does nothing<br>Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue. <br>Mining/Building only does exactly what it says. Only use if you are passed the early stages of the game (No longer need to trap, food and wood are useless). <br>You can disable science researching for the achievement: Reach Z120 without using manual research.', 'multitoggle', 1, null, "Core");
+    createSetting('ManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Mining/Building Only', 'Science Research OFF'], 'Controls what you gather/build do. Manual does nothing<br>Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue. <br>Mining/Building only does exactly what it says. Only use if you are passed the early stages of the game and have the mastery foremany unlocked (No longer need to trap, food and wood are useless). <br>You can disable science researching for the achievement: Reach Z120 without using manual research.', 'multitoggle', 1, null, "Core");
     createSetting('gathermetal', 'Metal Only', 'For use with Mining/Gather Only. Only gathers Metal if you have foremany unlocked. ', 'boolean', false, null, "Core");
     createSetting('BuyUpgradesNew', ['Manual Upgrades', 'Buy All Upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
     createSetting('amalcoord', 'Amal Boost', 'Boost your Amal count for more Mi. Will not buy coords until your H:D ratio is below a certain value. This means that you will get amals quicker. Will not activate higher than your Amal Boost End Zone Setting! ', 'boolean', false, null, "Core");
@@ -379,11 +379,15 @@ function initializeAllSettings() {
 
 
 //Heirloom
+
     createSetting('AutoHeirloomsNew', ['AutoHeirlooms Off', 'AutoHeirlooms 1', 'AutoHeirlooms 2'], '<b>AH1: </b>Keeps any heirloom whether they are staffs or shields. This generally prefers shields over staffs.<br><b>AH2: </b>Keeps 5 slots for shields and 5 slots of staffs. Does not include protected heirlooms, as it will take up a spot, so you would only have 9 to work with. Looks like this: SH/ST/SH/ST/SH/ST/SH/ST/SH/ST<br>It will keep heirlooms on portal. ', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('loomswap', 'Heirloom Swapping', '<b>HEIRLOOM SWAPPING MASTER BUTTON</b><br><br>Turn this on to enable the heirloom swapping settings. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('loomswap', 'Heirloom Swapping', '<b>HEIRLOOM SWAPPING MASTER BUTTON -1 TO DISABLE</b><br><br>Turn this on to enable the heirloom swapping settings. Set the zone to start Heirloom Swapping. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. Only works on wind zones. ', 'value', -1, null, 'Heirlooms');
+    createSetting('loomswaphd', 'HS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. Useful for windstacking. Only works on wind zones. ', 'value', '-1', null, 'Heirlooms');   
     createSetting('highdmg', 'HS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', 'Empty', null, 'Heirlooms');
     createSetting('lowdmg', 'HS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', 'Empty', null, 'Heirlooms');    
-
+    
+    //Heirloom Line
+    document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('autoheirlooms', 'Auto Heirlooms', '<b>NOT CURRENTLY WORKING</b> Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
     createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Both'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Both: </b>Keeps 5 Shields and 5 Staffs. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 5 Shields and 4 Staffs. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'None', ["None", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued"], 'Heirlooms');
@@ -540,7 +544,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
             };
         btn.setAttribute("style", "font-size: 1.1vw;");
         btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'textValue'})`);
+        btn.setAttribute("onclick", `autoSetTextToolTip("${id}", "${name}", ${type == 'textValue'})`);
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
         btn.textContent = name;
@@ -703,6 +707,23 @@ function autoSetValueToolTip(id, text,negative, multi) {
     box.focus();
 }
 
+function autoSetTextToolTip(id,text) {
+    ranstring = text;
+    var elem = document.getElementById("tooltipDiv");
+    var tooltipText = 'Type your input below';
+    tooltipText += `<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id}')" value="${autoTrimpSettings[id].value}"></input>`;
+    var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetText(\'' + id + '\')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
+    game.global.lockTooltip = true;
+    elem.style.left = '32.5%';
+    elem.style.top = '25%';
+    document.getElementById('tipTitle').textContent = ranstring + ':  Value Input';
+    document.getElementById('tipText').innerHTML = tooltipText;
+    document.getElementById('tipCost').innerHTML = costText;
+    elem.style.display = 'block';
+    var box = document.getElementById('customNumberBox');
+    box.focus();
+}
+
 function onKeyPressSetting(event, id,negative, multi) {
     if (event.which == 13 || event.keyCode == 13) {
         autoSetValue(id,negative, multi);
@@ -751,6 +772,19 @@ function autoSetValue(id,negative, multi) {
         document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
     else
         document.getElementById(id).innerHTML = ranstring + ': ' + "<span class='icomoon icon-infinity'></span>";
+    saveSettings();
+    checkPortalSettings();
+}
+
+function autoSetText(id) {
+    var string = 'empty';
+    unlockTooltip();
+    tooltip('hide');
+    var textBox = document.getElementById('customNumberBox');
+    if (textBox) {
+        string = textBox.value
+    } else return;
+    autoTrimpSettings[id].value = string;
     saveSettings();
     checkPortalSettings();
 }
@@ -915,6 +949,10 @@ function updateCustomButtons() {
     (game.worldUnlocks.easterEgg) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
     //Heirlooms
+    getPageSetting('loomswap') > 0 ? turnOn('loomswaphd') : turnOff('loomswaphd');
+    getPageSetting('loomswap') > 0 ? turnOn('highdmg') : turnOff('highdmg');
+    getPageSetting('loomswap') > 0 ? turnOn('lowdmg') : turnOff('lowdmg');
+
     var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
     var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
     var keepstaffenable = (autoheirloomenable && getPageSetting('keepstaffs')==true);
@@ -971,7 +1009,7 @@ function updateCustomButtons() {
    
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
-        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue' || item.type == 'textValue') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
                 if (item.type == 'multitoggle')
@@ -981,6 +1019,9 @@ function updateCustomButtons() {
                         elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
                     else
                         elem.textContent = item.name + ': ' + item.value.toString();
+                }
+                else if (item.type == 'textValue') {
+                    elem.textContent = item.name[item.value];
                 }
                 else if (item.value > -1 || item.type == 'valueNegative')
                     elem.textContent = item.name + ': ' + prettify(item.value);

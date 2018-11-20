@@ -246,3 +246,20 @@ var hrlmProtBtn1=document.createElement('DIV');hrlmProtBtn1.setAttribute('class'
 function protectHeirloom(a,b){var c=game.global.selectedHeirloom,d=c[1],e=game.global[d];if(-1!=c[0])var e=e[c[0]];b&&(e.protected=!e.protected),a||(d.includes("Equipped")?a=document.getElementById("protectHeirloomBTN1"):"heirloomsCarried"==d?a=document.getElementById("protectHeirloomBTN2"):"heirloomsExtra"==d&&(a=document.getElementById("protectHeirloomBTN3"))),a&&(a.innerHTML=e.protected?"UnProtect":"Protect")}
 function newSelectHeirloom(a,b,c){selectHeirloom(a,b,c),protectHeirloom()}
 function generateHeirloomIcon(a,b,c){if("undefined"==typeof a.name)return"<span class='icomoon icon-sad3'></span>";var d="Shield"==a.type?"icomoon icon-shield3":"glyphicon glyphicon-grain",e=game.options.menu.showHeirloomAnimations.enabled?"animated ":"",f="<span class=\"heirloomThing "+e+"heirloomRare"+a.rarity;"Equipped"==b&&(f+=" equipped");var g="";return g+="Equipped"==b?"-1,'"+a.type+"Equipped'":c+", 'heirlooms"+b+"'",f+="\" onmouseover=\"tooltip('Heirloom', null, event, null, "+g+")\" onmouseout=\"tooltip('hide')\" onclick=\"newSelectHeirloom(",f+=g+", this)\"> <span class=\""+d+"\"></span></span>",f}
+
+//loom swapping
+function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('highdmg'))return loom}
+function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom}
+
+function heirloomSwapping() {
+    if (getEmpowerment() == "Wind" && HDratioy() < getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
+        lowdmgshield();
+        selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+        equipHeirloom();
+    }
+    else if (((HDratioy() >= getPageSetting('loomswaphd')) || (getEmpowerment() != "Wind")) && game.global.ShieldEquipped.name == getPageSetting('lowdmg')) {
+        highdmgshield();
+        selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+        equipHeirloom();
+    }
+}
