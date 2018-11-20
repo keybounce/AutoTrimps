@@ -967,50 +967,53 @@ function autoMap() {
 }
 
 function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpire');if(0==getPageSetting('AutoMaps'))b='Off';else if('Mapology'==game.global.challengeActive&&1>game.challenges.Mapology.credits)b='Out of Map Credits';else if(preSpireFarming){var d=Math.floor(60-60*spireTime%60).toFixed(0),e=Math.floor(c-spireTime).toFixed(0),f=c-(spireTime/60).toFixed(2),g=60<=spireTime?f+'h':e+'m:'+(10<=d?d:'0'+d)+'s';b='Farming for Spire '+g+' left'}else spireMapBonusFarming?b='Getting Spire Map Bonus':doMaxMapBonus?b='Max Map Bonus After Zone':game.global.mapsUnlocked?needPrestige&&!doVoids?b='Prestige':doVoids?b='Void Maps: '+game.global.totalVoidMaps+' remaining':needToVoid&&!doVoids&&0<game.global.totalVoidMaps?b='Farming: '+HDratio.toFixed(4)+'x':scryerStuck?b='Scryer Got Stuck, Farming':enoughHealth||enoughDamage?enoughDamage?enoughHealth?enoughHealth&&enoughDamage&&(b='Advancing'):b='Want more health':b='Want '+HDratio.toFixed(4)+'x &nbspmore damage':b='Want Health & Damage':b='&nbsp;';skippedPrestige&&(b+='<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>');var h=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),i=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned)),j='He/hr: '+h.toFixed(3)+'%<br>&nbsp;&nbsp;&nbsp;He: '+i.toFixed(3)+'%';return a?[b,h,i]:void(document.getElementById('autoMapStatus').innerHTML=b,document.getElementById('hiderStatus').innerHTML=j)}
+
 MODULES["maps"].advSpecialMapMod_numZones = 3;
 var advExtraMapLevels = 0;
+
 function testMapSpecialModController() {
-	var a = [];
-	if (Object.keys(mapSpecialModifierConfig).forEach(function (o) {
-			var p = mapSpecialModifierConfig[o];
-			game.global.highestLevelCleared + 1 >= p.unlocksAt && a.push(p.abv.toLowerCase());
-		}), !(1 > a.length)) {
-		var c = document.getElementById("advSpecialSelect");
-		if (c) {
-			if (59 <= game.global.highestLevelCleared) {
-				if (needPrestige && a.includes("p")) { // Prestiging, so use Prestigious
-					c.value = "p";
-				}
-				else if (shouldFarm || !enoughHealth) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
-					c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
-				}
-				else c.value = "fa"; // Just farming for map stacks, so use Fast Attacks
-				// Only use a modifier we can actually afford
-				for (var d = updateMapCost(!0), e = game.resources.fragments.owned, f = 100 * (d / e); 0 < c.selectedIndex && d > e; )
-				{
-					c.selectedIndex -= 1;
-					"0" != c.value && console.log("Could not afford " + mapSpecialModifierConfig[c.value].name);
-				}
-				var d = updateMapCost(!0),
-				e = game.resources.fragments.owned;
-				"0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.")
-			}
-			var g = getSpecialModifierSetting(),
-			h = 109 <= game.global.highestLevelCleared,
-			i = checkPerfectChecked(),
-			j = document.getElementById("advPerfectCheckbox"),
-			k = getPageSetting("AdvMapSpecialModifier") ? getExtraMapLevels() : 0,
-			l = 209 <= game.global.highestLevelCleared;
-			if (l) {
-				var m = document.getElementById("advExtraMapLevelselect");
-				if (!m)
-					return;
-				var n = document.getElementById("mapLevelInput").value;
-				for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned; )
-					m.selectedIndex -= 1
-			}
-		}
-	}
+    var a = [];
+    if (Object.keys(mapSpecialModifierConfig).forEach(function (o) {
+            var p = mapSpecialModifierConfig[o];
+            game.global.highestLevelCleared + 1 >= p.unlocksAt && a.push(p.abv.toLowerCase());
+        }), !(1 > a.length)) {
+        var c = document.getElementById("advSpecialSelect");
+        if (c) {
+            if (59 <= game.global.highestLevelCleared) {
+                if (shouldFarm || !enoughHealth) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
+                    c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
+                }
+                else if (needPrestige && a.includes("p")) { // Prestiging, so use Prestigious
+                    c.value = "p";
+                }
+                else c.value = "fa"; // Just farming for map stacks, so use Fast Attacks
+                // Only use a modifier we can actually afford
+                for (var d = updateMapCost(!0), e = game.resources.fragments.owned, f = 100 * (d / e); 0 < c.selectedIndex && d > e; )
+                {
+                    c.selectedIndex -= 1;
+                    "0" != c.value && console.log("Could not afford " + mapSpecialModifierConfig[c.value].name);
+                }
+                var d = updateMapCost(!0),
+                e = game.resources.fragments.owned;
+                "0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.")
+            }
+            var g = getSpecialModifierSetting(),
+            h = 109 <= game.global.highestLevelCleared,
+            i = checkPerfectChecked(),
+            j = document.getElementById("advPerfectCheckbox"),
+            k = getPageSetting("AdvMapSpecialModifier") ? getExtraMapLevels() : 0,
+            l = 209 <= game.global.highestLevelCleared;
+            if (l) {
+                var m = document.getElementById("advExtraMapLevelselect");
+                if (!m)
+                    return;
+                var n = document.getElementById("mapLevelInput").value;
+                for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned; )
+                    m.selectedIndex -= 1
+            }
+        }
+    }
 }
+
 function mapTimeEstimater(){var a=lookUpZoneData(game.global.world),b=lookUpZoneData(game.global.world-1);return mapTimeEstimate=a&&b?a.currentTime-b.currentTime:0,mapTimeEstimate}
 function HDratioy(){return HDratio}
