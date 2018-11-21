@@ -1,4 +1,46 @@
+/*
 var allSaveData=[],graphData=[],tmpGraphData=JSON.parse(localStorage.getItem('allSaveData'));null!==tmpGraphData&&(console.log('Graphs: Found allSaveData (portal runs data). Yay!'),allSaveData=tmpGraphData),MODULES.graphs={},MODULES.graphs.useDarkAlways=!1;var head=document.getElementsByTagName('head')[0],chartscript=document.createElement('script');chartscript.type='text/javascript',chartscript.src='https://code.highcharts.com/highcharts.js',head.appendChild(chartscript);var newItem=document.createElement('TD');newItem.appendChild(document.createTextNode('Graphs')),newItem.setAttribute('class','btn btn-default'),newItem.setAttribute('onclick','autoToggleGraph(); drawGraph();');var settingbarRow=document.getElementById('settingsTable').firstElementChild.firstElementChild;settingbarRow.insertBefore(newItem,settingbarRow.childNodes[10]),document.getElementById('settingsRow').innerHTML+='<div id="graphParent" style="display: none; height: 600px; overflow: auto;"><div id="graph" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>',document.getElementById('graphParent').innerHTML+='<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';var $graphFooter=document.getElementById('graphFooterLine1'),graphList=['Helium - He/Hr','Helium - Total','HeHr % / LifetimeHe','He % / LifetimeHe','Clear Time','Cumulative Clear Time','Map Bonus','Void Maps','Void Map History','Loot Sources','Coordinations','Nullifium Gained','Dark Essence PerHour','OverkillCells','Magmite','Magmamancers','Fluffy XP','Fluffy XP PerHour','Nurseries','Wind Stacks','Amalgamators','Pop Ratio'],$graphSel=document.createElement('select');for(var item in $graphSel.id='graphSelection',$graphSel.setAttribute('style',''),$graphSel.setAttribute('onchange','drawGraph()'),graphList){var $opt=document.createElement('option');$opt.value=graphList[item],$opt.text=graphList[item],$graphSel.appendChild($opt)}$graphFooter.appendChild($graphSel),$graphFooter.innerHTML+='<div><button onclick="drawGraph(true,false)" style="margin-left:0.5em; width:2em;">\u2191</button></div><div><button onclick="drawGraph(false,true)" style="margin-left:0.5em; width:2em;">\u2193</button></div><div><button onclick="drawGraph()" style="margin-left:0.5em;">Refresh</button></div><div style="flex:0 100 5%;"></div><div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton();"></div><div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData(null,true); drawGraph();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div><div style="flex:0 100 5%;"></div><div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div><div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific(); drawGraph();">Delete Specific Portal</button></div><div style="flex:0 100 5%;"></div><div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip("Tips", "customText", event, "Export Graph Database will make a backup of all the graph data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.")\' onmouseout=\'tooltip("hide")\'>Export your Graph Database</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel()">Add Note/Label</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs()">Invert Selection</button></div><div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs()">All Off/On</button></div>',document.getElementById('graphFooterLine2').innerHTML+='<span style="float: left;" onmouseover=\'tooltip("Tips", "customText", event, "You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.")\' onmouseout=\'tooltip("hide")\'>Tips: Hover for usage tips.</span><input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB"><span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span><input onclick="toggleDarkGraphs()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB"><span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
+*/
+
+// Unpack this big line
+// 186340: No change (commit adds new graph types, leave in)
+// 28661bd: restore helium sp graph
+// 516d5dc -- restore graph for He/Hr Delta
+// ea885a3 -- restore a few graphs, incl 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe'
+//         --                    'GigaStations', 'Unused Gigas', 'Last Warpstation', 'Trimps', 'Dark Essence'
+
+var allSaveData = [],
+    graphData = [],
+    tmpGraphData = JSON.parse(localStorage.getItem('allSaveData'));
+null !== tmpGraphData && (console.log('Graphs: Found allSaveData (portal runs data). Yay!'), allSaveData = tmpGraphData), MODULES.graphs = {}, MODULES.graphs.useDarkAlways = !
+    1;
+var head = document.getElementsByTagName('head')[0],
+    chartscript = document.createElement('script');
+chartscript.type = 'text/javascript', chartscript.src = 'https://code.highcharts.com/highcharts.js', head.appendChild(chartscript);
+var newItem = document.createElement('TD');
+newItem.appendChild(document.createTextNode('Graphs')), newItem.setAttribute('class', 'btn btn-default'), newItem.setAttribute('onclick',
+    'autoToggleGraph(); drawGraph();');
+var settingbarRow = document.getElementById('settingsTable').firstElementChild.firstElementChild;
+settingbarRow.insertBefore(newItem, settingbarRow.childNodes[10]), document.getElementById('settingsRow').innerHTML +=
+    '<div id="graphParent" style="display: none; height: 600px; overflow: auto;"><div id="graph" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>',
+    document.getElementById('graphParent').innerHTML +=
+    '<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';
+var $graphFooter = document.getElementById('graphFooterLine1'),
+    graphList = ['Helium - He/Hr', 'Helium - Total', 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Helium Sp',
+        'Clear Time', 'Cumulative Clear Time', 'Run Time', 'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'GigaStations',
+        'Unused Gigas', 'Last Warpstation', 'Trimps', 'Nullifium Gained', 'Dark Essence', 'Dark Essence PerHour', 'OverkillCells', 'Magmite', 'Magmamancers',
+        'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries', 'Wind Stacks'
+    ],
+    $graphSel = document.createElement('select');
+for (var item in $graphSel.id = 'graphSelection', $graphSel.setAttribute('style', ''), $graphSel.setAttribute('onchange', 'drawGraph()'), graphList) {
+    var $opt = document.createElement('option');
+    $opt.value = graphList[item], $opt.text = graphList[item], $graphSel.appendChild($opt)
+}
+$graphFooter.appendChild($graphSel), $graphFooter.innerHTML +=
+    '<div><button onclick="drawGraph(true,false)" style="margin-left:0.5em; width:2em;">\u2191</button></div><div><button onclick="drawGraph(false,true)" style="margin-left:0.5em; width:2em;">\u2193</button></div><div><button onclick="drawGraph()" style="margin-left:0.5em;">Refresh</button></div><div style="flex:0 100 5%;"></div><div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton();"></div><div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData(null,true); drawGraph();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div><div style="flex:0 100 5%;"></div><div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div><div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific(); drawGraph();">Delete Specific Portal</button></div><div style="flex:0 100 5%;"></div><div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip("Tips", "customText", event, "Export Graph Database will make a backup of all the graph data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.")\' onmouseout=\'tooltip("hide")\'>Export your Graph Database</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel()">Add Note/Label</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs()">Invert Selection</button></div><div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs()">All Off/On</button></div>',
+    document.getElementById('graphFooterLine2').innerHTML +=
+    '<span style="float: left;" onmouseover=\'tooltip("Tips", "customText", event, "You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.")\' onmouseout=\'tooltip("hide")\'>Tips: Hover for usage tips.</span><input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB"><span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span><input onclick="toggleDarkGraphs()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB"><span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
+
 function toggleClearButton(){document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked}
 function addDarkGraphs(){var a=document.getElementById("dark-graph.css");if(!a){var b=document.createElement("link");b.rel="stylesheet",b.type="text/css",b.id="dark-graph.css",b.href=basepath+"dark-graph.css",document.head.appendChild(b),debug("Adding dark-graph.css file","graphs")}}
 function removeDarkGraphs(){var a=document.getElementById("dark-graph.css");a&&(document.head.removeChild(a),debug("Removing dark-graph.css file","graphs"))}
@@ -17,7 +59,54 @@ function addGraphNoteLabel(){debug("GOTCHA This feature is not actually written,
 function autoToggleGraph(){game.options.displayed&&toggleSettingsMenu();var a=document.getElementById('autoSettings');a&&'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('autoTrimpsTabBarMenu');a&&'block'===a.style.display&&(a.style.display='none');var b=document.getElementById('graphParent');'block'===b.style.display?b.style.display='none':(b.style.display='block',setGraph())}
 function escapeATWindows(){var a=document.getElementById('tooltipDiv');if('none'!=a.style.display)return void cancelTooltip();game.options.displayed&&toggleSettingsMenu();var b=document.getElementById('autoSettings');'block'===b.style.display&&(b.style.display='none');var b=document.getElementById('autoTrimpsTabBarMenu');'block'===b.style.display&&(b.style.display='none');var c=document.getElementById('graphParent');'block'===c.style.display&&(c.style.display='none')}document.addEventListener('keydown',function(a){1!=game.options.menu.hotkeys.enabled||game.global.preMapsActive||game.global.lockTooltip||ctrlPressed||heirloomsShown||27!=a.keyCode||escapeATWindows()},!0);
 function getTotalDarkEssenceCount(){var a=10*(Math.pow(3,countPurchasedTalents())-1)/2;return game.global.essence+a}
+/*
 function pushData(){debug("Starting Zone "+game.global.world,"graphs");var a=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),b=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned));allSaveData.push({totalPortals:game.global.totalPortals,heliumOwned:game.resources.helium.owned,currentTime:new Date().getTime(),portalTime:game.global.portalTime,world:game.global.world,challenge:game.global.challengeActive,voids:game.global.totalVoidMaps,heirlooms:{value:game.stats.totalHeirlooms.value,valueTotal:game.stats.totalHeirlooms.valueTotal},nullifium:recycleAllExtraHeirlooms(!0),coord:game.upgrades.Coordination.done,hehr:a.toFixed(4),helife:b.toFixed(4),overkill:GraphsVars.OVKcellsInWorld,zonetime:GraphsVars.ZoneStartTime,mapbonus:GraphsVars.MapBonus,magmite:game.global.magmite,magmamancers:game.jobs.Magmamancer.owned,fluffy:game.global.fluffyExp,nursery:game.buildings.Nursery.purchased,amals:game.jobs.Amalgamator.owned,poprat:(game.resources.trimps.realMax()/game.resources.trimps.getCurrentSend()),windstacks:game.empowerments.Wind.currentDebuffPower}),clearData(15),safeSetItems("allSaveData",JSON.stringify(allSaveData))}
+*/
+
+// Step one in restoring graphs: Make this code readable -- unchanged but reformatted from Zek's cleanup
+// Revert after d2b2350 (full zek)
+// step 2: Before d2b2350 (first revert)
+// step 3: Before 186340d (restore sphehr, keep amal and poprat.)
+
+function pushData() {
+    debug("Starting Zone " + game.global.world, "graphs");
+    var a = 100 * (game.stats.heliumHour.value() / (game.global.totalHeliumEarned - (game.global.heliumLeftover + game.resources.helium.owned))),
+        b = 100 * (game.resources.helium.owned / (game.global.totalHeliumEarned - game.resources.helium.owned));
+    allSaveData.push({
+        totalPortals: game.global.totalPortals,
+        heliumOwned: game.resources.helium.owned,
+        currentTime: new Date().getTime(),
+        portalTime: game.global.portalTime,
+        world: game.global.world,
+        challenge: game.global.challengeActive,
+        voids: game.global.totalVoidMaps,
+        heirlooms: {
+            value: game.stats.totalHeirlooms.value,
+            valueTotal: game.stats.totalHeirlooms.valueTotal
+        },
+        nullifium: recycleAllExtraHeirlooms(!0),
+        gigas: game.upgrades.Gigastation.done,
+        gigasleft: game.upgrades.Gigastation.allowed - game.upgrades.Gigastation.done,
+        trimps: game.resources.trimps.realMax(),
+        coord: game.upgrades.Coordination.done,
+        lastwarp: game.global.lastWarp,
+        essence: getTotalDarkEssenceCount(),
+        hehr: a.toFixed(4),
+        helife: b.toFixed(4),
+        overkill: GraphsVars.OVKcellsInWorld,
+        zonetime: GraphsVars.ZoneStartTime,
+        mapbonus: GraphsVars.MapBonus,
+        magmite: game.global.magmite,
+        magmamancers: game.jobs.Magmamancer.owned,
+        fluffy: game.global.fluffyExp,
+        nursery: game.buildings.Nursery.purchased,
+        amals: game.jobs.Amalgamator.owned,
+        poprat: (game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()),
+        sphehr: game.stats.heliumHour.value(),
+        windstacks: game.empowerments.Wind.currentDebuffPower
+    }), clearData(15), safeSetItems("allSaveData", JSON.stringify(allSaveData))
+}
+
 var graphAnal=[];
 function trackHourlyGraphAnalytics(){graphAnal.push({currentTime:new Date().getTime(),totalPortals:game.global.totalPortals,heliumOwned:game.resources.helium.owned,highzone:game.global.highestLevelCleared,bones:game.global.b}),safeSetItems('graphAnal',JSON.stringify(graphAnal))}
 trackHourlyGraphAnalytics();
@@ -99,6 +188,124 @@ function setGraphData(graph) {
     valueSuffix = '';
 
     switch (graph) {
+        case 'Helium - He/Hr Instant':
+            var currentPortal = -1;
+            var currentZone = -1;
+            graphData = [];
+            var nowhehr = 0;
+            var lasthehr = 0;
+            for (var i in allSaveData) {
+                if (allSaveData[i].totalPortals != currentPortal) {
+                    graphData.push({
+                        name: 'Portal ' + allSaveData[i].totalPortals + ': ' + allSaveData[i].challenge,
+                        data: []
+                    });
+                    currentPortal = allSaveData[i].totalPortals;
+                    if (allSaveData[i].world == 1 && currentZone != -1)
+                        graphData[graphData.length - 1].data.push(0);
+
+                    if (currentZone == -1 || allSaveData[i].world != 1) {
+                        var loop = allSaveData[i].world;
+                        while (loop > 0) {
+                            graphData[graphData.length - 1].data.push(0);
+                            loop--;
+                        }
+                    }
+                    nowhehr = 0;
+                    lasthehr = 0;
+                }
+                if (currentZone < allSaveData[i].world && currentZone != -1) {
+                    nowhehr = Math.floor((allSaveData[i].heliumOwned - allSaveData[i - 1].heliumOwned) / ((allSaveData[i].currentTime - allSaveData[i - 1].currentTime) / 3600000));
+                    graphData[graphData.length - 1].data.push(nowhehr);
+                }
+                currentZone = allSaveData[i].world;
+
+            }
+            title = 'Helium/Hour Instantaneous - between current and last zone.';
+            xTitle = 'Zone';
+            yTitle = 'Helium/Hour per each zone';
+            yType = 'Linear';
+            yminFloor = null;
+            break;
+
+        case 'Helium - He/Hr Delta':
+            var currentPortal = -1;
+            var currentZone = -1;
+            graphData = [];
+            var nowhehr = 0;
+            var lasthehr = 0;
+            for (var i in allSaveData) {
+                if (allSaveData[i].totalPortals != currentPortal) {
+                    graphData.push({
+                        name: 'Portal ' + allSaveData[i].totalPortals + ': ' + allSaveData[i].challenge,
+                        data: []
+                    });
+                    currentPortal = allSaveData[i].totalPortals;
+                    if (allSaveData[i].world == 1 && currentZone != -1)
+                        graphData[graphData.length - 1].data.push(0);
+
+                    if (currentZone == -1 || allSaveData[i].world != 1) {
+                        var loop = allSaveData[i].world;
+                        while (loop > 0) {
+                            graphData[graphData.length - 1].data.push(0);
+                            loop--;
+                        }
+                    }
+                    nowhehr = 0;
+                    lasthehr = 0;
+                }
+                if (currentZone < allSaveData[i].world && currentZone != -1) {
+                    nowhehr = Math.floor(allSaveData[i].heliumOwned / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000));
+                    if (lasthehr == 0)
+                        lasthehr = nowhehr;
+                    graphData[graphData.length - 1].data.push(nowhehr - lasthehr);
+                }
+                currentZone = allSaveData[i].world;
+                lasthehr = nowhehr;
+
+            }
+            title = 'Helium/Hour Delta(Difference) - between current and last zone.';
+            xTitle = 'Zone';
+            yTitle = 'Difference in Helium/Hour';
+            yType = 'Linear';
+            yminFloor = null;
+            break;
+
+        case 'Run Time':
+            var currentPortal = -1;
+            var theChallenge = '';
+            graphData = [];
+            for (var i in allSaveData) {
+                if (allSaveData[i].totalPortals != currentPortal) {
+                    if (currentPortal == -1) {
+                        theChallenge = allSaveData[i].challenge;
+                        currentPortal = allSaveData[i].totalPortals;
+                        graphData.push({
+                            name: 'Run Time',
+                            data: [],
+                            type: 'column'
+                        });
+                        continue;
+                    }
+                    var theOne = allSaveData[i - 1];
+                    var runTime = theOne.currentTime - theOne.portalTime;
+                    graphData[0].data.push([theOne.totalPortals, runTime]);
+                    theChallenge = allSaveData[i].challenge;
+                    currentPortal = allSaveData[i].totalPortals;
+                }
+            }
+            title = 'Total Run Time';
+            xTitle = 'Portal';
+            yTitle = 'Time';
+            yType = 'datetime';
+            formatter = function() {
+                var ser = this.series;
+                return '<span style="color:' + ser.color + '" >●</span> ' +
+                    ser.name + ': <b>' +
+                    Highcharts.dateFormat('%H:%M:%S', this.y) + '</b><br>';
+
+            };
+            break;
 
         case 'Void Maps':
             var currentPortal = -1;
@@ -322,6 +529,34 @@ function setGraphData(graph) {
             yTitle = 'Coordination';
             yType = 'Linear';
             break;
+        case 'GigaStations':
+            graphData = allPurposeGraph('gigas', true, "number");
+            title = 'Gigastation History';
+            xTitle = 'Zone';
+            yTitle = 'Number of Gigas';
+            yType = 'Linear';
+            break;
+        case 'Unused Gigas':
+            graphData = allPurposeGraph('gigasleft', true, "number");
+            title = 'Unused Gigastations';
+            xTitle = 'Zone';
+            yTitle = 'Number of Gigas';
+            yType = 'Linear';
+            break;
+        case 'Last Warpstation':
+            graphData = allPurposeGraph('lastwarp', true, "number");
+            title = 'Warpstation History';
+            xTitle = 'Zone';
+            yTitle = 'Previous Giga\'s Number of Warpstations';
+            yType = 'Linear';
+            break;
+        case 'Trimps':
+            graphData = allPurposeGraph('trimps', true, "number");
+            title = 'Total Trimps Owned';
+            xTitle = 'Zone';
+            yTitle = 'Cumulative Number of Trimps';
+            yType = 'Linear';
+            break;
         case 'Magmite':
             graphData = allPurposeGraph('magmite', true, "number");
             title = 'Total Magmite Owned';
@@ -337,6 +572,14 @@ function setGraphData(graph) {
             yTitle = 'Magmamancers';
             yType = 'Linear';
             xminFloor = 230;
+            break;
+        case 'Dark Essence':
+            graphData = allPurposeGraph('essence', true, "number");
+            title = 'Total Dark Essence Owned';
+            xTitle = 'Zone';
+            yTitle = 'Dark Essence';
+            yType = 'Linear';
+            xminFloor = 181;
             break;
         case 'Dark Essence PerHour':
             var currentPortal = -1;
@@ -534,6 +777,14 @@ function setGraphData(graph) {
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
         setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor, yminFloor, additionalParams);
+    }
+    if (graph == 'Helium - He/Hr Delta') {
+        var plotLineoptions = {
+            value: 0,
+            width: 2,
+            color: 'red'
+        };
+        chart1.yAxis[0].addPlotLine(plotLineoptions);
     }
     if (graph == 'Loot Sources') {
         chart1.xAxis[0].tickInterval = 1;
