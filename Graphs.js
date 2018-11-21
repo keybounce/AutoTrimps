@@ -17,7 +17,46 @@ function addGraphNoteLabel(){debug("GOTCHA This feature is not actually written,
 function autoToggleGraph(){game.options.displayed&&toggleSettingsMenu();var a=document.getElementById('autoSettings');a&&'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('autoTrimpsTabBarMenu');a&&'block'===a.style.display&&(a.style.display='none');var b=document.getElementById('graphParent');'block'===b.style.display?b.style.display='none':(b.style.display='block',setGraph())}
 function escapeATWindows(){var a=document.getElementById('tooltipDiv');if('none'!=a.style.display)return void cancelTooltip();game.options.displayed&&toggleSettingsMenu();var b=document.getElementById('autoSettings');'block'===b.style.display&&(b.style.display='none');var b=document.getElementById('autoTrimpsTabBarMenu');'block'===b.style.display&&(b.style.display='none');var c=document.getElementById('graphParent');'block'===c.style.display&&(c.style.display='none')}document.addEventListener('keydown',function(a){1!=game.options.menu.hotkeys.enabled||game.global.preMapsActive||game.global.lockTooltip||ctrlPressed||heirloomsShown||27!=a.keyCode||escapeATWindows()},!0);
 function getTotalDarkEssenceCount(){var a=10*(Math.pow(3,countPurchasedTalents())-1)/2;return game.global.essence+a}
+/*
 function pushData(){debug("Starting Zone "+game.global.world,"graphs");var a=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),b=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned));allSaveData.push({totalPortals:game.global.totalPortals,heliumOwned:game.resources.helium.owned,currentTime:new Date().getTime(),portalTime:game.global.portalTime,world:game.global.world,challenge:game.global.challengeActive,voids:game.global.totalVoidMaps,heirlooms:{value:game.stats.totalHeirlooms.value,valueTotal:game.stats.totalHeirlooms.valueTotal},nullifium:recycleAllExtraHeirlooms(!0),coord:game.upgrades.Coordination.done,hehr:a.toFixed(4),helife:b.toFixed(4),overkill:GraphsVars.OVKcellsInWorld,zonetime:GraphsVars.ZoneStartTime,mapbonus:GraphsVars.MapBonus,magmite:game.global.magmite,magmamancers:game.jobs.Magmamancer.owned,fluffy:game.global.fluffyExp,nursery:game.buildings.Nursery.purchased,amals:game.jobs.Amalgamator.owned,poprat:(game.resources.trimps.realMax()/game.resources.trimps.getCurrentSend()),windstacks:game.empowerments.Wind.currentDebuffPower}),clearData(15),safeSetItems("allSaveData",JSON.stringify(allSaveData))}
+*/
+
+// Step one in restoring graphs: Make this code readable -- unchanged but reformatted from Zek's cleanup
+// Revert after d2b2350 (full zek)
+
+function pushData() {
+    debug("Starting Zone " + game.global.world, "graphs");
+    var a = 100 * (game.stats.heliumHour.value() / (game.global.totalHeliumEarned - (game.global.heliumLeftover + game.resources.helium.owned))),
+        b = 100 * (game.resources.helium.owned / (game.global.totalHeliumEarned - game.resources.helium.owned));
+    allSaveData.push({
+        totalPortals: game.global.totalPortals,
+        heliumOwned: game.resources.helium.owned,
+        currentTime: new Date().getTime(),
+        portalTime: game.global.portalTime,
+        world: game.global.world,
+        challenge: game.global.challengeActive,
+        voids: game.global.totalVoidMaps,
+        heirlooms: {
+            value: game.stats.totalHeirlooms.value,
+            valueTotal: game.stats.totalHeirlooms.valueTotal
+        },
+        nullifium: recycleAllExtraHeirlooms(!0),
+        coord: game.upgrades.Coordination.done,
+        hehr: a.toFixed(4),
+        helife: b.toFixed(4),
+        overkill: GraphsVars.OVKcellsInWorld,
+        zonetime: GraphsVars.ZoneStartTime,
+        mapbonus: GraphsVars.MapBonus,
+        magmite: game.global.magmite,
+        magmamancers: game.jobs.Magmamancer.owned,
+        fluffy: game.global.fluffyExp,
+        nursery: game.buildings.Nursery.purchased,
+        amals: game.jobs.Amalgamator.owned,
+        poprat: (game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()),
+        windstacks: game.empowerments.Wind.currentDebuffPower
+    }), clearData(15), safeSetItems("allSaveData", JSON.stringify(allSaveData))
+}
+
 var graphAnal=[];
 function trackHourlyGraphAnalytics(){graphAnal.push({currentTime:new Date().getTime(),totalPortals:game.global.totalPortals,heliumOwned:game.resources.helium.owned,highzone:game.global.highestLevelCleared,bones:game.global.b}),safeSetItems('graphAnal',JSON.stringify(graphAnal))}
 trackHourlyGraphAnalytics();
