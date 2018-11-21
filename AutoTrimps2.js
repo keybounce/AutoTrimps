@@ -19,13 +19,14 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "2018-11-19", version: "003", description: "4.914 Now builds faster when only a single building type (lots of mansions, etc.)", isNew: true});
-changelogList.push({date: "2018-11-19", version: "002", description: "4.914 Keybounce's version now loads.", isNew: true});
-changelogList.push({date: "2018-11-19", version: "001", description: "4.914 Turkimp now triggers most workers instead of always metal", isNew: true});
+changelogList.push({date: "2018-11-20", version: "004", description: "4.914 Prioritize cache over prestige when need both", isNew: true});
+changelogList.push({date: "2018-11-19", version: "003", description: "4.914 Now builds faster when only a single building type (lots of mansions, etc.)", isNew: false});
+changelogList.push({date: "2018-11-19", version: "002", description: "4.914 Keybounce's version now loads.", isNew: false});
+changelogList.push({date: "2018-11-19", version: "001", description: "4.914 Turkimp now triggers most workers instead of always metal", isNew: false});
 changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
-changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
-changelogList.push({date: "03/10/2018", version: "v2.8.0", description: "<b>4.912</b> C2 Runner fully functional. Customize the C2 runner however you like, portal and percent threshhold. Also added a few QoL buttons in a few tabs, some backend adjustments. Please report any bugs, and as always, thanks for using my fork! ", isNew: false});
-changelogList.push({date: "30/09/2018", version: "v2.7.4", description: "<b>4.912</b> Added more things, fixed more things, please report more broken things, thanks for using more of my things. ", isNew: false});
+//changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
+//changelogList.push({date: "03/10/2018", version: "v2.8.0", description: "<b>4.912</b> C2 Runner fully functional. Customize the C2 runner however you like, portal and percent threshhold. Also added a few QoL buttons in a few tabs, some backend adjustments. Please report any bugs, and as always, thanks for using my fork! ", isNew: false});
+//changelogList.push({date: "30/09/2018", version: "v2.7.4", description: "<b>4.912</b> Added more things, fixed more things, please report more broken things, thanks for using more of my things. ", isNew: false});
 //changelogList.push({date: "19/09/2018", version: "v2.7.3", description: "<b>4.911</b> Added things, fixed things, please report broken things, thanks for using my things. ", isNew: false});
 //changelogList.push({date: "12/09/2018", version: "v2.7.2", description: "<b>4.91</b> Scryer Stuff really works now! No really! <b>Nature Scryer</b> got a rework. <b>Removed AS1</b> in favor of AS2, so make sure yours is set! May need some tuning so let me know if it sucks! Replaced AS1 with <b>D Stance</b>. <b>Amal Target</b> for Amal boosting, may not work correctly, yet. Please let me know if it works though! Added a setting to control mode <b>Before Fueling</b> in Magma. Small performance boost for liq zones. Thanks for using the fork in <b>4.91</b>! ", isNew: false});
 //changelogList.push({date: "06/09/2018", version: "v2.7.1", description: "<b>4.901</b> Scryer Stuff actually works now, neat. Replaced one of the autogather options with a new more efficient option for late game. Fight always got an upgrade. Thanks for using the fork in 4.9(01)! ", isNew: false});
