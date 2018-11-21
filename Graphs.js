@@ -23,6 +23,7 @@ function pushData(){debug("Starting Zone "+game.global.world,"graphs");var a=100
 
 // Step one in restoring graphs: Make this code readable -- unchanged but reformatted from Zek's cleanup
 // Revert after d2b2350 (full zek)
+// step 2: Before d2b2350 (first revert)
 
 function pushData() {
     debug("Starting Zone " + game.global.world, "graphs");
@@ -41,7 +42,12 @@ function pushData() {
             valueTotal: game.stats.totalHeirlooms.valueTotal
         },
         nullifium: recycleAllExtraHeirlooms(!0),
+        gigas: game.upgrades.Gigastation.done,
+        gigasleft: game.upgrades.Gigastation.allowed - game.upgrades.Gigastation.done,
+        trimps: game.resources.trimps.realMax(),
         coord: game.upgrades.Coordination.done,
+        lastwarp: game.global.lastWarp,
+        essence: getTotalDarkEssenceCount(),
         hehr: a.toFixed(4),
         helife: b.toFixed(4),
         overkill: GraphsVars.OVKcellsInWorld,
