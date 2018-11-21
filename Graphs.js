@@ -5,6 +5,8 @@ var allSaveData=[],graphData=[],tmpGraphData=JSON.parse(localStorage.getItem('al
 // Unpack this big line
 // 186340: No change (commit adds new graph types, leave in)
 // 28661bd: restore helium sp graph
+// 516d5dc -- restore graph for He/Hr Delta
+
 
 var allSaveData = [],
     graphData = [],
@@ -619,6 +621,14 @@ function setGraphData(graph) {
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
         setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor, yminFloor, additionalParams);
+    }
+    if (graph == 'Helium - He/Hr Delta') {
+        var plotLineoptions = {
+            value: 0,
+            width: 2,
+            color: 'red'
+        };
+        chart1.yAxis[0].addPlotLine(plotLineoptions);
     }
     if (graph == 'Loot Sources') {
         chart1.xAxis[0].tickInterval = 1;
