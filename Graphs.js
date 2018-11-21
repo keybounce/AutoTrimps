@@ -24,6 +24,7 @@ function pushData(){debug("Starting Zone "+game.global.world,"graphs");var a=100
 // Step one in restoring graphs: Make this code readable -- unchanged but reformatted from Zek's cleanup
 // Revert after d2b2350 (full zek)
 // step 2: Before d2b2350 (first revert)
+// step 3: Before 186340d (restore sphehr, keep amal and poprat.)
 
 function pushData() {
     debug("Starting Zone " + game.global.world, "graphs");
@@ -59,6 +60,7 @@ function pushData() {
         nursery: game.buildings.Nursery.purchased,
         amals: game.jobs.Amalgamator.owned,
         poprat: (game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()),
+        sphehr: game.stats.heliumHour.value(),
         windstacks: game.empowerments.Wind.currentDebuffPower
     }), clearData(15), safeSetItems("allSaveData", JSON.stringify(allSaveData))
 }
