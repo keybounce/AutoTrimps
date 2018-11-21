@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         AutoTrimps-Keybounce-testBranch
-// @version      1.2-Keybounce
+// @version      1.3-Keybounce
 // @namespace    https://raw.githubusercontent.com/keybounce/AutoTrimps/TestRoot
 // @updateURL    https://raw.githubusercontent.com/keybounce/AutoTrimps/TestRoot/.user.js
 // @description  Keybounce's test branch, may change at any time
@@ -8,7 +8,7 @@
 // @include      *trimps.github.io*
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @connect      *Keybounce.github.io/AutoTrimps*
-// @connect      *githubusercontent.com/keybounce*
+// @connect      *raw.githubusercontent.com/keybounce*
 // @connect      *trimps.github.io*
 // @connect      self
 // @grant        none
