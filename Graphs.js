@@ -4,6 +4,7 @@ var allSaveData=[],graphData=[],tmpGraphData=JSON.parse(localStorage.getItem('al
 
 // Unpack this big line
 // 186340: No change (commit adds new graph types, leave in)
+// 28661bd: restore helium sp graph
 
 var allSaveData = [],
     graphData = [],
@@ -22,9 +23,9 @@ settingbarRow.insertBefore(newItem, settingbarRow.childNodes[10]), document.getE
     document.getElementById('graphParent').innerHTML +=
     '<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';
 var $graphFooter = document.getElementById('graphFooterLine1'),
-    graphList = ['Helium - He/Hr', 'Helium - Total', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Clear Time', 'Cumulative Clear Time', 'Map Bonus',
-        'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'Nullifium Gained', 'Dark Essence PerHour', 'OverkillCells', 'Magmite',
-        'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries', 'Wind Stacks', 'Amalgamators', 'Pop Ratio'
+    graphList = ['Helium - He/Hr', 'Helium - Total', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Helium Sp', 'Clear Time', 'Cumulative Clear Time',
+        'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'Nullifium Gained', 'Dark Essence PerHour', 'OverkillCells', 'Magmite',
+        'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries', 'Wind Stacks'
     ],
     $graphSel = document.createElement('select');
 for (var item in $graphSel.id = 'graphSelection', $graphSel.setAttribute('style', ''), $graphSel.setAttribute('onchange', 'drawGraph()'), graphList) {
@@ -35,7 +36,6 @@ $graphFooter.appendChild($graphSel), $graphFooter.innerHTML +=
     '<div><button onclick="drawGraph(true,false)" style="margin-left:0.5em; width:2em;">\u2191</button></div><div><button onclick="drawGraph(false,true)" style="margin-left:0.5em; width:2em;">\u2193</button></div><div><button onclick="drawGraph()" style="margin-left:0.5em;">Refresh</button></div><div style="flex:0 100 5%;"></div><div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton();"></div><div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData(null,true); drawGraph();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div><div style="flex:0 100 5%;"></div><div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div><div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific(); drawGraph();">Delete Specific Portal</button></div><div style="flex:0 100 5%;"></div><div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip("Tips", "customText", event, "Export Graph Database will make a backup of all the graph data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.")\' onmouseout=\'tooltip("hide")\'>Export your Graph Database</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel()">Add Note/Label</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs()">Invert Selection</button></div><div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs()">All Off/On</button></div>',
     document.getElementById('graphFooterLine2').innerHTML +=
     '<span style="float: left;" onmouseover=\'tooltip("Tips", "customText", event, "You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.")\' onmouseout=\'tooltip("hide")\'>Tips: Hover for usage tips.</span><input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB"><span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span><input onclick="toggleDarkGraphs()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB"><span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
-
 
 function toggleClearButton(){document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked}
 function addDarkGraphs(){var a=document.getElementById("dark-graph.css");if(!a){var b=document.createElement("link");b.rel="stylesheet",b.type="text/css",b.id="dark-graph.css",b.href=basepath+"dark-graph.css",document.head.appendChild(b),debug("Adding dark-graph.css file","graphs")}}
