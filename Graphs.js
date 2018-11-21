@@ -3,6 +3,7 @@ var allSaveData=[],graphData=[],tmpGraphData=JSON.parse(localStorage.getItem('al
 */
 
 // Unpack this big line
+// 186340: No change (commit adds new graph types, leave in)
 
 var allSaveData = [],
     graphData = [],
