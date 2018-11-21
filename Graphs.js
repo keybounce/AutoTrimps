@@ -6,7 +6,8 @@ var allSaveData=[],graphData=[],tmpGraphData=JSON.parse(localStorage.getItem('al
 // 186340: No change (commit adds new graph types, leave in)
 // 28661bd: restore helium sp graph
 // 516d5dc -- restore graph for He/Hr Delta
-
+// ea885a3 -- restore a few graphs, incl 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe'
+//         --                    'GigaStations', 'Unused Gigas', 'Last Warpstation', 'Trimps', 'Dark Essence'
 
 var allSaveData = [],
     graphData = [],
@@ -25,9 +26,10 @@ settingbarRow.insertBefore(newItem, settingbarRow.childNodes[10]), document.getE
     document.getElementById('graphParent').innerHTML +=
     '<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';
 var $graphFooter = document.getElementById('graphFooterLine1'),
-    graphList = ['Helium - He/Hr', 'Helium - Total', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Helium Sp', 'Clear Time', 'Cumulative Clear Time',
-        'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'Nullifium Gained', 'Dark Essence PerHour', 'OverkillCells', 'Magmite',
-        'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries', 'Wind Stacks'
+    graphList = ['Helium - He/Hr', 'Helium - Total', 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Helium Sp',
+        'Clear Time', 'Cumulative Clear Time', 'Run Time', 'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'GigaStations',
+        'Unused Gigas', 'Last Warpstation', 'Trimps', 'Nullifium Gained', 'Dark Essence', 'Dark Essence PerHour', 'OverkillCells', 'Magmite', 'Magmamancers',
+        'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries', 'Wind Stacks'
     ],
     $graphSel = document.createElement('select');
 for (var item in $graphSel.id = 'graphSelection', $graphSel.setAttribute('style', ''), $graphSel.setAttribute('onchange', 'drawGraph()'), graphList) {
@@ -186,6 +188,124 @@ function setGraphData(graph) {
     valueSuffix = '';
 
     switch (graph) {
+        case 'Helium - He/Hr Instant':
+            var currentPortal = -1;
+            var currentZone = -1;
+            graphData = [];
+            var nowhehr = 0;
+            var lasthehr = 0;
+            for (var i in allSaveData) {
+                if (allSaveData[i].totalPortals != currentPortal) {
+                    graphData.push({
+                        name: 'Portal ' + allSaveData[i].totalPortals + ': ' + allSaveData[i].challenge,
+                        data: []
+                    });
+                    currentPortal = allSaveData[i].totalPortals;
+                    if (allSaveData[i].world == 1 && currentZone != -1)
+                        graphData[graphData.length - 1].data.push(0);
+
+                    if (currentZone == -1 || allSaveData[i].world != 1) {
+                        var loop = allSaveData[i].world;
+                        while (loop > 0) {
+                            graphData[graphData.length - 1].data.push(0);
+                            loop--;
+                        }
+                    }
+                    nowhehr = 0;
+                    lasthehr = 0;
+                }
+                if (currentZone < allSaveData[i].world && currentZone != -1) {
+                    nowhehr = Math.floor((allSaveData[i].heliumOwned - allSaveData[i - 1].heliumOwned) / ((allSaveData[i].currentTime - allSaveData[i - 1].currentTime) / 3600000));
+                    graphData[graphData.length - 1].data.push(nowhehr);
+                }
+                currentZone = allSaveData[i].world;
+
+            }
+            title = 'Helium/Hour Instantaneous - between current and last zone.';
+            xTitle = 'Zone';
+            yTitle = 'Helium/Hour per each zone';
+            yType = 'Linear';
+            yminFloor = null;
+            break;
+
+        case 'Helium - He/Hr Delta':
+            var currentPortal = -1;
+            var currentZone = -1;
+            graphData = [];
+            var nowhehr = 0;
+            var lasthehr = 0;
+            for (var i in allSaveData) {
+                if (allSaveData[i].totalPortals != currentPortal) {
+                    graphData.push({
+                        name: 'Portal ' + allSaveData[i].totalPortals + ': ' + allSaveData[i].challenge,
+                        data: []
+                    });
+                    currentPortal = allSaveData[i].totalPortals;
+                    if (allSaveData[i].world == 1 && currentZone != -1)
+                        graphData[graphData.length - 1].data.push(0);
+
+                    if (currentZone == -1 || allSaveData[i].world != 1) {
+                        var loop = allSaveData[i].world;
+                        while (loop > 0) {
+                            graphData[graphData.length - 1].data.push(0);
+                            loop--;
+                        }
+                    }
+                    nowhehr = 0;
+                    lasthehr = 0;
+                }
+                if (currentZone < allSaveData[i].world && currentZone != -1) {
+                    nowhehr = Math.floor(allSaveData[i].heliumOwned / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000));
+                    if (lasthehr == 0)
+                        lasthehr = nowhehr;
+                    graphData[graphData.length - 1].data.push(nowhehr - lasthehr);
+                }
+                currentZone = allSaveData[i].world;
+                lasthehr = nowhehr;
+
+            }
+            title = 'Helium/Hour Delta(Difference) - between current and last zone.';
+            xTitle = 'Zone';
+            yTitle = 'Difference in Helium/Hour';
+            yType = 'Linear';
+            yminFloor = null;
+            break;
+
+        case 'Run Time':
+            var currentPortal = -1;
+            var theChallenge = '';
+            graphData = [];
+            for (var i in allSaveData) {
+                if (allSaveData[i].totalPortals != currentPortal) {
+                    if (currentPortal == -1) {
+                        theChallenge = allSaveData[i].challenge;
+                        currentPortal = allSaveData[i].totalPortals;
+                        graphData.push({
+                            name: 'Run Time',
+                            data: [],
+                            type: 'column'
+                        });
+                        continue;
+                    }
+                    var theOne = allSaveData[i - 1];
+                    var runTime = theOne.currentTime - theOne.portalTime;
+                    graphData[0].data.push([theOne.totalPortals, runTime]);
+                    theChallenge = allSaveData[i].challenge;
+                    currentPortal = allSaveData[i].totalPortals;
+                }
+            }
+            title = 'Total Run Time';
+            xTitle = 'Portal';
+            yTitle = 'Time';
+            yType = 'datetime';
+            formatter = function() {
+                var ser = this.series;
+                return '<span style="color:' + ser.color + '" >●</span> ' +
+                    ser.name + ': <b>' +
+                    Highcharts.dateFormat('%H:%M:%S', this.y) + '</b><br>';
+
+            };
+            break;
 
         case 'Void Maps':
             var currentPortal = -1;
@@ -409,6 +529,34 @@ function setGraphData(graph) {
             yTitle = 'Coordination';
             yType = 'Linear';
             break;
+        case 'GigaStations':
+            graphData = allPurposeGraph('gigas', true, "number");
+            title = 'Gigastation History';
+            xTitle = 'Zone';
+            yTitle = 'Number of Gigas';
+            yType = 'Linear';
+            break;
+        case 'Unused Gigas':
+            graphData = allPurposeGraph('gigasleft', true, "number");
+            title = 'Unused Gigastations';
+            xTitle = 'Zone';
+            yTitle = 'Number of Gigas';
+            yType = 'Linear';
+            break;
+        case 'Last Warpstation':
+            graphData = allPurposeGraph('lastwarp', true, "number");
+            title = 'Warpstation History';
+            xTitle = 'Zone';
+            yTitle = 'Previous Giga\'s Number of Warpstations';
+            yType = 'Linear';
+            break;
+        case 'Trimps':
+            graphData = allPurposeGraph('trimps', true, "number");
+            title = 'Total Trimps Owned';
+            xTitle = 'Zone';
+            yTitle = 'Cumulative Number of Trimps';
+            yType = 'Linear';
+            break;
         case 'Magmite':
             graphData = allPurposeGraph('magmite', true, "number");
             title = 'Total Magmite Owned';
@@ -424,6 +572,14 @@ function setGraphData(graph) {
             yTitle = 'Magmamancers';
             yType = 'Linear';
             xminFloor = 230;
+            break;
+        case 'Dark Essence':
+            graphData = allPurposeGraph('essence', true, "number");
+            title = 'Total Dark Essence Owned';
+            xTitle = 'Zone';
+            yTitle = 'Dark Essence';
+            yType = 'Linear';
+            xminFloor = 181;
             break;
         case 'Dark Essence PerHour':
             var currentPortal = -1;
